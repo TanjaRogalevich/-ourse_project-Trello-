@@ -1,0 +1,157 @@
+@import "bootstrap/scss/bootstrap";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+
+html {
+  font-family: "Raleway", sans-serif;
+}
+
+.container {
+  max-width: 1170px;
+  padding: 0 40px;
+  margin: auto;
+}
+
+.header {
+  background-color: lavender;
+  padding: 0 20px 0;
+  justify-content: center;
+}
+
+.header__wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 10px 10px;
+}
+
+.logo {
+  font-weight: bolder;
+}
+
+.header__wrapper__logo {
+  display: flex;
+  align-items: center;
+}
+
+.clock {
+  background: lightgray;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 13px;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.todos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  background-color: rgb(220, 213, 213);
+  min-width: 300px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.text {
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.todos_text1 {
+  background: rgb(167, 222, 167);
+}
+
+.todos_text2 {
+  background: rgb(181, 181, 214);
+}
+
+.todos_text3 {
+  background: lightblue;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: auto;
+  background-color: #007bff;
+  color: #fff; 
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3; 
+  }
+}
+.card {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  background-color: red;
+}
+
+.card.todo {
+  background-color: lightcoral; 
+}
+
+.card.inProgress {
+  background-color: lightyellow; 
+}
+
+.card.done {
+  background-color: lightgreen; 
+}
+
+.button {
+  margin-top: auto;
+}
+
+.modal {
+  display: none;
+  z-index: 1;
+  width: 50%;
+}
+
+.modal1 {
+    display: none;
+    z-index: 1;
+    width: 50%;
+  }
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
+textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.delete-btn {
+    margin-top: 10px;
+}
+
