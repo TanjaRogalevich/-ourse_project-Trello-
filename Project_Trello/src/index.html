@@ -74,40 +74,60 @@
       </div>
     </section>
 
-    <div id="modal" class="modal" tabindex="-1">
+    <div
+      class="modal fade"
+      id="create-todo__modal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">New task</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+        <form class="create-form">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input class="modal-header__title w-75" id="title-input" placeholder="Заголовок"></input>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <textarea class="modal-description"
+              rows="6"
+              cols="60"
+              id="description-input"
+              placeholder="Введите новый текст для задачи..."
+            ></textarea>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <select
+              class="form-select form-select-sm create-users__select w-50"  
+              aria-label="Small select example"></select>
+              <button type="button" class="btn btn-primary create-todo__button w-25">Add</button>
+            </div>
           </div>
-          <div class="modal-body">
-            <textarea id="taskInput" placeholder="Введите задачу..."></textarea>
-            <select id="statusSelect">
-              <option value="todo">To Do</option>
-              <option value="inProgress">In Progress</option>
-              <option value="done">Done</option>
-            </select>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="addTaskBtn">
-              Save changes
-            </button>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
 
-    <div id="modal1" class="modal1" tabindex="-1">
-      <div class="modal-dialog">
+    <div
+    class="modal fade"
+    id="edit-todo__modal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <form class="create-form">
         <div class="modal-content">
-          <div class="modal-header justify-content-between">
-            <h5 class="modal-title">Edit task</h5>
+          <div class="modal-header">
+            <input class="modal-header__title w-75" id="title-input" placeholder="Заголовок"></input>
             <button
               type="button"
               class="btn-close"
@@ -116,18 +136,22 @@
             ></button>
           </div>
           <div class="modal-body">
-            <textarea
-              id="newTaskInput"
-              placeholder="Введите новый текст для задачи..."
-            ></textarea>
+            <textarea class="modal-description"
+            rows="6"
+            cols="60"
+            id="description-input"
+            placeholder="Введите новый текст для задачи..."
+          ></textarea>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="confirmBtn">
-              Save changes
-            </button>
+          <div class="modal-footer justify-content-between">
+            <select
+            class="form-select form-select-sm edit-users__select w-50"  
+            aria-label="Small select example"></select>
+            <button type="button" class="btn btn-primary eddit-todo__button w-25">Confirm</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
+  </div>
   </body>
 </html>
