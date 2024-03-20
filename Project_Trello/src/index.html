@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./scss/app.scss" />
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <div class="wrapper header__wrapper">
+          <span class="logo header__logo">Trello</span>
+          <div class="clock header__clock"></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="task-tracker">
+      <div class="container">
+        <div class="todos__wrapper">
+          <div class="todo__item">
+            <div class="todo__header">
+              <h2 class="todo__header-title">ToDo:</h2>
+              <span class="todo__header-counter" id="todo-counter"></span>
+            </div>
+            <div class="cards__wrapper" id="todo">
+              <div class="card">
+                <span class="card__title">gfcds</span>
+                <span class="card__description">gfvd</span>
+                <span class="card__user-name">gggg</span>
+                <select class="card__status">
+                  <option value="todo">To Do</option>
+                  <option value="inProgress">In Progress</option>
+                  <option value="done">Done</option>
+                </select>
+                <div class="card__options">
+                  <span class="card__date">333</span>
+                  <div class="card__buttons">
+                    <button class="edit-btn">Edit</button>
+                    <button class="delete-btn">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary add-card-btn">
+              Add ToDo
+            </button>
+          </div>
+
+          <div class="todo__item">
+            <div class="todo__header in-progress__header">
+              <h2 class="todo__header-title">In Progress:</h2>
+              <span
+                class="todo__header-counter"
+                id="in-progress-counter"
+              ></span>
+            </div>
+            <div class="cards__wrapper" id="in-progress"></div>
+          </div>
+
+          <div class="todo__item">
+            <div class="todo__header done__header">
+              <h2 class="todo__header-title">Done:</h2>
+              <span class="todo__header-counter" id="done-counter"></span>
+            </div>
+            <div class="cards__wrapper" id="done"></div>
+            <button type="submit" class="btn btn-danger clear-all-btn">
+              Delete all
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New task</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <textarea id="taskInput" placeholder="Введите задачу..."></textarea>
+            <select id="statusSelect">
+              <option value="todo">To Do</option>
+              <option value="inProgress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="addTaskBtn">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal1" class="modal1" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header justify-content-between">
+            <h5 class="modal-title">Edit task</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <textarea
+              id="newTaskInput"
+              placeholder="Введите новый текст для задачи..."
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="confirmBtn">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

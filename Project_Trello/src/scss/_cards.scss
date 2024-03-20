@@ -1,0 +1,42 @@
+.card {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    background-color: red;
+    width: 90%;
+  }
+  
+  .card__title {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  
+  .card__status {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .card__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card__buttons button {
+    width: 60px;
+    border-radius: 5px;
+  }
+  
+  .card.todo {
+    background-color: lightcoral;
+  }
+  
+  .card.inProgress {
+    background-color: lightyellow;
+  }
+  
+  .card.done {
+    background-color: lightgreen;
+  }
+  

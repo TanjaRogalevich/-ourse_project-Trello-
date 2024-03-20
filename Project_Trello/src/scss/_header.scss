@@ -1,0 +1,35 @@
+.header {
+  background-color: lavender;
+  padding: 0 20px 0;
+  justify-content: center;
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 10px;
+  font-family: "Roboto";
+
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.header__wrapper__logo {
+  display: flex;
+  align-items: center;
+}
+
+.clock {
+  background: lightgray;
+  height: 30px;
+  border-radius: 10px;
+  font-size: 25px;
+  padding: 10px 10px 10px 10px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
