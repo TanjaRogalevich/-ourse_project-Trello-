@@ -20,142 +20,242 @@ setInterval(clock, 1000);
 const createTodoModalElement = new Modal("#create-todo__modal", {
   keyboard: false,
 });
-const addTodoButtonElement = $(".add-card-btn");
 
-addTodoButtonElement.addEventListener("click", () => {
+const openModalElement = $(".add-card-btn");
+const editTodoButtonElement = $(".edit-btn");
+const addTodoButtonElement = $(".create-todo__button");
+
+const createModalTitleInputElement = $("#new-title-input");
+const createModalDescriptionInputElement = $("#new-description-input");
+const createModalUserNameElement = $(".create-users__select");
+
+const todosWrapperElement = $(".todos__wrapper");
+
+// Вызов модального окна кнопкой add
+openModalElement.addEventListener("click", () => {
   createTodoModalElement.show();
 });
 
-// const addCardBtn = document.querySelector(".add-card-btn");
-// const modal = document.getElementById("modal");
-// const closeModalBtn = document.querySelector(".btn-close");
-// const addTaskBtn = document.getElementById("addTaskBtn");
-// const todoList = document.getElementById("todo");
-// const inProgressList = document.getElementById("inProgress");
-// const doneList = document.getElementById("done");
-// const date = new Date();
-// const actualDate = `${date.getDate().toString().padStart(2, "0")}.${(
-//   date.getMonth() + 1
-// )
-//   .toString()
-//   .padStart(2, "0")}.${date.getFullYear()}`;
-// const wrapperCardElement = document.querySelector(".wrapper-card");
+// Вызов модального окна кнопкой edit
 
-// function openModal() {
-//   modal.style.display = "block";
-// }
+function getDataFromStorage() {
+  const data = localStorage.getItem("data");
 
-// addCardBtn.addEventListener("click", openModal);
+  if (data) {
+    const dataFromStorage = JSON.parse(data);
 
-// function closeModal() {
-//   modal.style.display = "none";
-// }
+    return dataFromStorage.map((todo) => {
+      todo.createdAt = new Date(todo.createdAt);
+      return todo;
+    });
+  } else {
+    return [];
+  }
+}
 
-// closeModalBtn.addEventListener("click", closeModal);
+function setDataToStorage() {
+  localStorage.setItem("data", JSON.stringify(data));
+}
 
-// function createTaskCard(taskInput) {
-//   const taskCard = document.createElement("div");
-//   taskCard.classList.add("card");
-//   taskCard.innerHTML = `
-//         <p>${taskInput}</p>
-//         <select class="statusSelect">
-//             <option value="todo">To Do</option>
-//             <option value="inProgress">In Progress</option>
-//             <option value="done">Done</option>
-//         </select>
-//         <p> ${actualDate}</p>
-//         <button class="edit-btn">Edit</button>
-//         <button class="delete-btn">Delete</button>
-//     `;
+const data = getDataFromStorage();
 
-//   taskCard.querySelector(".edit-btn").addEventListener("click", () => {
-//     const modal1 = document.getElementById("modal1");
-//     modal1.style.display = "block";
+if (data.length) {
+  render();
+}
 
-//     const confirmBtn = document.getElementById("confirmBtn");
-//     confirmBtn.addEventListener("click", () => {
-//       const newText = document.getElementById("newTaskInput").value;
-//       if (newText.trim() !== "") {
-//         taskCard.querySelector("p").textContent = newText;
-//       }
-//       modal1.style.display = "none";
-//     });
+function render() {
+  resetColumns();
+  // let html = "";
 
-//     const closeButton = modal1.querySelector(".btn-close");
-//     closeButton.addEventListener("click", () => {
-//       modal1.style.display = "none";
-//     });
-//   });
+  data.forEach((todo) => {
+    const template = buildTemplate(todo);
+    const containerElement = $(`#${todo.status}`);
 
-//   taskCard.querySelector(".delete-btn").addEventListener("click", () => {
-//     taskCard.remove();
-//   });
+    containerElement.insertAdjacentHTML("beforeend", template);
+  });
 
-//   function changeCardColor() {
-//     const selectedStatus = taskCard.querySelector(".statusSelect").value;
-//     switch (selectedStatus) {
-//       case "inProgress":
-//         taskCard.style.backgroundColor = "yellow";
-//         break;
-//       case "done":
-//         taskCard.style.backgroundColor = "green";
-//         break;
-//     }
-//   }
+  // data.forEach((todo) => {
+  //   const template = buildTemplate(todo);
+  //   html += template;
+  // });
 
-//   taskCard.querySelector(".statusSelect").addEventListener("change", () => {
-//     const selectedStatus = taskCard.querySelector(".statusSelect").value;
-//     const targetList = getTargetList(selectedStatus);
-//     targetList.appendChild(taskCard);
-//     changeCardColor();
-//   });
+  // const todoElement = $("#todo");
+  // todoElement.innerHTML = html;
+  todoCounters();
+}
 
-//   changeCardColor();
+// Объект карточки
+function createTodo(title, description, userName) {
+  const todo = {
+    id: Date.now(),
+    title,
+    description,
+    createdAt: new Date(),
+    status: "todo",
+    userName,
+  };
 
-//   return taskCard;
-// }
+  return todo;
+}
 
-// function getTargetList(status) {
-//   switch (status) {
-//     case "todo":
-//       return todoList;
-//     case "inProgress":
-//       return inProgressList;
-//     case "done":
-//       return doneList;
-//     default:
-//       return todoList;
-//   }
-// }
+function buildTemplate({
+  id,
+  title,
+  description,
+  createdAt,
+  userName,
+  status,
+}) {
+  const time = `${createdAt.getDate().toString().padStart(2, "0")}.${(
+    createdAt.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}.${createdAt.getFullYear()}  ${createdAt
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${createdAt
+    .getMinutes()
+    .toString()
+    .padStart(2, "0")}:${createdAt.getSeconds().toString().padStart(2, "0")}`;
 
-// function addTaskToList(taskInput, status) {
-//   const currentDate = new Date().toISOString().slice(0, 10);
-//   const taskCard = createTaskCard(taskInput, status, currentDate);
-//   const targetList = getTargetList(status);
-//   targetList.appendChild(taskCard);
-// }
+  return `
+    <div class="todo__card" data-id="${id}">
+      <span class="card__title">${title}</span>
+      <span class="card__description">${description}</span>
+      <span class="card__user-name">${userName}</span>
+      <select class="card__status" data-role="status">
+        <option value="todo" ${status == "todo" ? "selected" : ""}>Todo</option>
+        <option value="in-progress" ${
+          status == "in-progress" ? "selected" : ""
+        }>In Progress</option>
+        <option value="done" ${status == "done" ? "selected" : ""}>Done</option>
+      </select>
+      <div class="card__options">
+        <span class="card__date">${time}</span>
+        <div class="card__buttons">
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn" data-role="remove">Delete</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
 
-// addTaskBtn.addEventListener("click", () => {
-//   const taskInput = document.getElementById("taskInput").value;
-//   const statusSelect = document.getElementById("statusSelect");
-//   const selectedStatus = statusSelect.options[statusSelect.selectedIndex].value;
+// Добавление карточки
 
-//   if (taskInput.trim() !== "") {
-//     addTaskToList(taskInput, selectedStatus);
-//     closeModal();
-//   } else {
-//     alert("Введите текст задачи!");
-//   }
-// });
+addTodoButtonElement.addEventListener("click", handleSubmitForm);
 
-// function deleteAllTasks(list) {
-//   list.innerHTML = "";
-// }
+function handleSubmitForm(event) {
+  event.preventDefault();
 
-// const deleteAllCardsElement = document.querySelector(".clear-all-btn");
-// deleteAllCardsElement.addEventListener("click", function () {
-//   const cardsElement = document.querySelectorAll(".card");
-//   cardsElement.forEach(function (card) {
-//     card.remove();
-//   });
-// });
+  const title = createModalTitleInputElement.value;
+  const description = createModalDescriptionInputElement.value;
+  const userName = createModalUserNameElement.value;
+
+  const newTodo = createTodo(title, description, userName);
+  const formElement = $(".create-form");
+
+  data.push(newTodo);
+
+  setDataToStorage();
+  formElement.reset();
+  render();
+}
+
+// Удалить карточку
+
+function handleClickRemoveButton({ target }) {
+  const { role } = target.dataset;
+
+  if (role !== "remove") return;
+
+  const rootElement = target.closest(".todo__card");
+  const { id } = rootElement.dataset;
+
+  const index = data.findIndex((todo) => todo.id == id);
+
+  data.splice(index, 1);
+
+  setDataToStorage();
+  render();
+}
+
+todosWrapperElement.addEventListener("click", handleClickRemoveButton);
+
+// Счетчик карточек
+
+function todoCounters() {
+  const counterTodoElement = $("#todo-counter");
+  const counterInProgressElement = $("#in-progress-counter");
+  const counterDoneElement = $("#done-counter");
+
+  let todoCounter = 0;
+  let inProgressCounter = 0;
+  let doneCounter = 0;
+
+  data.forEach((todo) => {
+    if (todo.status == "todo") {
+      todoCounter += 1;
+    } else if (todo.status == "in-progress") {
+      inProgressCounter += 1;
+    } else if (todo.status == "done") {
+      doneCounter += 1;
+    }
+  });
+
+  counterTodoElement.textContent = todoCounter;
+  counterInProgressElement.textContent = inProgressCounter;
+  counterDoneElement.textContent = doneCounter;
+}
+
+// Очиста от карточек в каждой колонке
+
+function resetColumns() {
+  const todoContainerElement = $("#todo");
+  const inProgressContainerElement = $("#in-progress");
+  const doneContainerElement = $("#done");
+
+  todoContainerElement.innerHTML = "";
+  inProgressContainerElement.innerHTML = "";
+  doneContainerElement.innerHTML = "";
+}
+
+// Перемещение карточки в зависимоси от статуса
+
+function handleChangeElement({ target }) {
+  const { role } = target.dataset;
+  if (role !== "status") return;
+
+  const rootElement = target.closest(".todo__card");
+  const { id } = rootElement.dataset;
+
+  const currentCard = data.find((todo) => todo.id == id);
+
+  const selectElement = target.closest(".card__status");
+
+  currentCard.status = selectElement.value;
+
+  setDataToStorage();
+  render();
+}
+
+
+function handleClickRemoveButton({ target }) {
+  const { role } = target.dataset;
+
+  if (role !== "remove") return;
+
+  const rootElement = target.closest(".todo__card");
+  const { id } = rootElement.dataset;
+
+  const index = data.findIndex((todo) => todo.id == id);
+
+  data.splice(index, 1);
+
+  setDataToStorage();
+  render();
+}
+
+todosWrapperElement.addEventListener("change", handleChangeElement);
+
+

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./scss/app.scss" />
-    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/app.js" defer></script>
   </head>
   <body>
     <header class="header">
@@ -25,25 +25,7 @@
               <h2 class="todo__header-title">ToDo:</h2>
               <span class="todo__header-counter" id="todo-counter"></span>
             </div>
-            <div class="cards__wrapper" id="todo">
-              <div class="card">
-                <span class="card__title">gfcds</span>
-                <span class="card__description">gfvd</span>
-                <span class="card__user-name">gggg</span>
-                <select class="card__status">
-                  <option value="todo">To Do</option>
-                  <option value="inProgress">In Progress</option>
-                  <option value="done">Done</option>
-                </select>
-                <div class="card__options">
-                  <span class="card__date">333</span>
-                  <div class="card__buttons">
-                    <button class="edit-btn">Edit</button>
-                    <button class="delete-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="cards__wrapper" id="todo"></div>
             <button type="submit" class="btn btn-primary add-card-btn">
               Add ToDo
             </button>
@@ -87,7 +69,11 @@
         <form class="create-form">
           <div class="modal-content">
             <div class="modal-header">
-              <input class="modal-header__title w-75" id="title-input" placeholder="Заголовок"></input>
+              <input
+                class="modal-header__title w-75"
+                id="new-title-input"
+                placeholder="Заголовок"
+              />
               <button
                 type="button"
                 class="btn-close"
@@ -96,18 +82,29 @@
               ></button>
             </div>
             <div class="modal-body">
-              <textarea class="modal-description"
-              rows="6"
-              cols="60"
-              id="description-input"
-              placeholder="Введите новый текст для задачи..."
-            ></textarea>
+              <textarea
+                class="modal-description"
+                rows="6"
+                cols="60"
+                id="new-description-input"
+                placeholder="Введите новый текст для задачи..."
+              ></textarea>
             </div>
             <div class="modal-footer justify-content-between">
               <select
-              class="form-select form-select-sm create-users__select w-50"  
-              aria-label="Small select example"></select>
-              <button type="button" class="btn btn-primary create-todo__button w-25">Add</button>
+                class="form-select form-select-sm create-users__select w-50"
+                aria-label="Small select example"
+              >
+                <option value="tanya">gfrd</option>
+                <option value="alex">bgvrfd</option>
+              </select>
+              <button
+                type="submit"
+                class="btn btn-primary create-todo__button w-25"
+                data-bs-dismiss="modal"
+              >
+                Add
+              </button>
             </div>
           </div>
         </form>
@@ -115,43 +112,54 @@
     </div>
 
     <div
-    class="modal fade"
-    id="edit-todo__modal"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <form class="create-form">
-        <div class="modal-content">
-          <div class="modal-header">
-            <input class="modal-header__title w-75" id="title-input" placeholder="Заголовок"></input>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+      class="modal fade"
+      id="edit-todo__modal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form class="create-form">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input
+                class="modal-header__title w-75"
+                id="edit-title-input"
+                placeholder="Заголовок"
+              />
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <textarea
+                class="modal-description"
+                rows="6"
+                cols="60"
+                id="edit-description-input"
+                placeholder="Введите новый текст для задачи..."
+              ></textarea>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <select
+                class="form-select form-select-sm edit-users__select w-50"
+                aria-label="Small select example"
+              ></select>
+              <button
+                type="button"
+                class="btn btn-primary eddit-todo__button w-25"
+              >
+                Confirm
+              </button>
+            </div>
           </div>
-          <div class="modal-body">
-            <textarea class="modal-description"
-            rows="6"
-            cols="60"
-            id="description-input"
-            placeholder="Введите новый текст для задачи..."
-          ></textarea>
-          </div>
-          <div class="modal-footer justify-content-between">
-            <select
-            class="form-select form-select-sm edit-users__select w-50"  
-            aria-label="Small select example"></select>
-            <button type="button" class="btn btn-primary eddit-todo__button w-25">Confirm</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
   </body>
 </html>

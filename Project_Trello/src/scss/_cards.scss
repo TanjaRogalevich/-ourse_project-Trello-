@@ -1,42 +1,54 @@
-.card {
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    background-color: red;
-    width: 90%;
-  }
-  
-  .card__title {
-    font-weight: 700;
-    font-size: 18px;
-  }
-  
-  .card__status {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-  }
-  
-  .card__options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .card__buttons button {
-    width: 60px;
-    border-radius: 5px;
-  }
-  
-  .card.todo {
-    background-color: lightcoral;
-  }
-  
-  .card.inProgress {
-    background-color: lightyellow;
-  }
-  
-  .card.done {
-    background-color: lightgreen;
-  }
+.todo__card {
+  border: 3px solid #ccc;
+  border-radius: 5px;
+  background-color: #d29999;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card__title {
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card__description {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card__status {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  width: 35%;
+}
+
+.card__options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card__buttons button {
+  width: 60px;
+  border-radius: 5px;
+}
+
+.card.todo {
+  background-color: lightcoral;
+}
+
+.card.inProgress {
+  background-color: lightyellow;
+}
+
+.card.done {
+  background-color: lightgreen;
+}
+
   
