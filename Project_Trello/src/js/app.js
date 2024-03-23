@@ -31,6 +31,8 @@ const createModalUserNameElement = $(".create-users__select");
 
 const todosWrapperElement = $(".todos__wrapper");
 
+const deleteAllButtonElement = $(".clear-all-btn");
+
 // Вызов модального окна кнопкой add
 openModalElement.addEventListener("click", () => {
   createTodoModalElement.show();
@@ -233,12 +235,25 @@ function handleChangeElement({ target }) {
 
   const selectElement = target.closest(".card__status");
 
+  let inProgress = 0;
+
+  data.forEach((todo) => {
+    if (todo.status == "in-progress") {
+      inProgress += 1;
+    }
+  });
+
+  if (inProgress >= 6 && selectElement.value == "in-progress") {
+    alert("Выполните оставшиеся задачи, чтобы добавить новую");
+    render();
+    return;
+  }
+
   currentCard.status = selectElement.value;
 
   setDataToStorage();
   render();
 }
-
 
 function handleClickRemoveButton({ target }) {
   const { role } = target.dataset;
@@ -258,4 +273,49 @@ function handleClickRemoveButton({ target }) {
 
 todosWrapperElement.addEventListener("change", handleChangeElement);
 
+// Удаление всех карточек кнопкой delete all
 
+function handleDeleteAllButton() {
+  const deleteConfirm = confirm("Вы уверены, что хотите удалить?");
+
+  if (deleteConfirm == true) {
+    const newArray = data.filter((todo) => todo.status !== "done");
+    data.length = 0;
+    newArray.forEach((todo) => data.push(todo));
+  }
+
+  setDataToStorage();
+  render();
+}
+
+deleteAllButtonElement.addEventListener("click", handleDeleteAllButton);
+
+// Подключение пользователей
+
+fetch("https://jsonplaceholder.typicode.com/users")
+  .then((response) => response.json())
+  .then((users) => {
+    renderUserName(users);
+  })
+  .catch(() => {
+    console.log("Что-то пошло не так");
+  });
+
+function buildTemplateUsersName({ name }) {
+  return `
+    <option value="${name}">${name}</option>
+    `;
+}
+
+function renderUserName(users) {
+  let html = "";
+
+  users.forEach((user) => {
+    const template = buildTemplateUsersName(user);
+    html += template;
+  });
+
+  const selectUsersNameElement = $(".create-users__select");
+
+  selectUsersNameElement.insertAdjacentHTML("beforeend", html);
+}

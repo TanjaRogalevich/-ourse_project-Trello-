@@ -39,16 +39,10 @@
   border-radius: 5px;
 }
 
-.card.todo {
-  background-color: lightcoral;
+#in-progress .todo__card {
+  background-color: rgb(137, 137, 64);
 }
 
-.card.inProgress {
-  background-color: lightyellow;
+#done .todo__card {
+  background-color: rgb(137, 182, 137);
 }
-
-.card.done {
-  background-color: lightgreen;
-}
-
-  
