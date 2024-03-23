@@ -1,4 +1,4 @@
-import { Modal, Dropdown } from "bootstrap";
+import { Modal, Dropdown } from 'bootstrap';
 
 function $(selector) {
   return document.querySelector(selector);
@@ -10,38 +10,46 @@ function $$(selector) {
 
 function clock() {
   const date = new Date();
-  const hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+  const hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
   const minutes =
-    date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-  document.querySelector(".clock").innerHTML = hours + ":" + minutes;
+    date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+  document.querySelector('.clock').innerHTML = hours + ':' + minutes;
 }
 setInterval(clock, 1000);
 
-const createTodoModalElement = new Modal("#create-todo__modal", {
+const createTodoModalElement = new Modal('#create-todo__modal', {
   keyboard: false,
 });
 
-const openModalElement = $(".add-card-btn");
-const editTodoButtonElement = $(".edit-btn");
-const addTodoButtonElement = $(".create-todo__button");
+const editTodoModalElement = new Modal('#edit-todo__modal', {
+  keyboard: false,
+});
 
-const createModalTitleInputElement = $("#new-title-input");
-const createModalDescriptionInputElement = $("#new-description-input");
-const createModalUserNameElement = $(".create-users__select");
+const openModalElement = $('.add-card-btn');
+const editTodoButtonElement = $('.edit-btn');
+const addTodoButtonElement = $('.create-todo__button');
 
-const todosWrapperElement = $(".todos__wrapper");
+const createModalTitleInputElement = $('#new-title-input');
+const createModalDescriptionInputElement = $('#new-description-input');
+const createModalUserNameElement = $('.create-users__select');
 
-const deleteAllButtonElement = $(".clear-all-btn");
+const editModalTitleInputElement = $('#edit-title-input');
+const editModalDescriptionElement = $('#edit-description-input');
+const editModalUserNameElement = $('.edit-users__select');
+
+const todosWrapperElement = $('.todos__wrapper');
+
+const deleteAllButtonElement = $('.clear-all-btn');
+
+const editFormElement = $('.edit-form');
 
 // Вызов модального окна кнопкой add
-openModalElement.addEventListener("click", () => {
+openModalElement.addEventListener('click', () => {
   createTodoModalElement.show();
 });
 
-// Вызов модального окна кнопкой edit
-
 function getDataFromStorage() {
-  const data = localStorage.getItem("data");
+  const data = localStorage.getItem('data');
 
   if (data) {
     const dataFromStorage = JSON.parse(data);
@@ -56,7 +64,7 @@ function getDataFromStorage() {
 }
 
 function setDataToStorage() {
-  localStorage.setItem("data", JSON.stringify(data));
+  localStorage.setItem('data', JSON.stringify(data));
 }
 
 const data = getDataFromStorage();
@@ -73,7 +81,7 @@ function render() {
     const template = buildTemplate(todo);
     const containerElement = $(`#${todo.status}`);
 
-    containerElement.insertAdjacentHTML("beforeend", template);
+    containerElement.insertAdjacentHTML('beforeend', template);
   });
 
   // data.forEach((todo) => {
@@ -87,17 +95,37 @@ function render() {
 }
 
 // Объект карточки
-function createTodo(title, description, userName) {
-  const todo = {
-    id: Date.now(),
-    title,
-    description,
-    createdAt: new Date(),
-    status: "todo",
-    userName,
-  };
 
-  return todo;
+// function createTodo(title, description, userName) {
+//   const todo = {
+//     id: Date.now(),
+//     title,
+//     description,
+//     createdAt: new Date(),
+//     status: "todo",
+//     userName,
+//   };
+
+//   return todo;
+// }
+
+class Todo {
+  constructor(title, description, userName) {
+    this.id = Date.now();
+    this.title = title;
+    this.description = description;
+    this.createdAt = new Date();
+    this.status = 'todo';
+    this.userName = userName;
+  }
+
+  show() {
+    this.styles.display = 'block';
+  }
+
+  hide() {
+    this.styles.display = 'none';
+  }
 }
 
 function buildTemplate({
@@ -108,17 +136,17 @@ function buildTemplate({
   userName,
   status,
 }) {
-  const time = `${createdAt.getDate().toString().padStart(2, "0")}.${(
+  const time = `${createdAt.getDate().toString().padStart(2, '0')}.${(
     createdAt.getMonth() + 1
   )
     .toString()
-    .padStart(2, "0")}.${createdAt.getFullYear()}  ${createdAt
+    .padStart(2, '0')}.${createdAt.getFullYear()}  ${createdAt
     .getHours()
     .toString()
-    .padStart(2, "0")}:${createdAt
+    .padStart(2, '0')}:${createdAt
     .getMinutes()
     .toString()
-    .padStart(2, "0")}:${createdAt.getSeconds().toString().padStart(2, "0")}`;
+    .padStart(2, '0')}:${createdAt.getSeconds().toString().padStart(2, '0')}`;
 
   return `
     <div class="todo__card" data-id="${id}">
@@ -126,16 +154,16 @@ function buildTemplate({
       <span class="card__description">${description}</span>
       <span class="card__user-name">${userName}</span>
       <select class="card__status" data-role="status">
-        <option value="todo" ${status == "todo" ? "selected" : ""}>Todo</option>
+        <option value="todo" ${status == 'todo' ? 'selected' : ''}>Todo</option>
         <option value="in-progress" ${
-          status == "in-progress" ? "selected" : ""
+          status == 'in-progress' ? 'selected' : ''
         }>In Progress</option>
-        <option value="done" ${status == "done" ? "selected" : ""}>Done</option>
+        <option value="done" ${status == 'done' ? 'selected' : ''}>Done</option>
       </select>
       <div class="card__options">
         <span class="card__date">${time}</span>
         <div class="card__buttons">
-          <button class="edit-btn">Edit</button>
+          <button class="edit-btn" data-role="edit">Edit</button>
           <button class="delete-btn" data-role="remove">Delete</button>
         </div>
       </div>
@@ -145,7 +173,7 @@ function buildTemplate({
 
 // Добавление карточки
 
-addTodoButtonElement.addEventListener("click", handleSubmitForm);
+addTodoButtonElement.addEventListener('click', handleSubmitForm);
 
 function handleSubmitForm(event) {
   event.preventDefault();
@@ -154,8 +182,8 @@ function handleSubmitForm(event) {
   const description = createModalDescriptionInputElement.value;
   const userName = createModalUserNameElement.value;
 
-  const newTodo = createTodo(title, description, userName);
-  const formElement = $(".create-form");
+  const newTodo = new Todo(title, description, userName);
+  const formElement = $('.create-form');
 
   data.push(newTodo);
 
@@ -169,9 +197,9 @@ function handleSubmitForm(event) {
 function handleClickRemoveButton({ target }) {
   const { role } = target.dataset;
 
-  if (role !== "remove") return;
+  if (role !== 'remove') return;
 
-  const rootElement = target.closest(".todo__card");
+  const rootElement = target.closest('.todo__card');
   const { id } = rootElement.dataset;
 
   const index = data.findIndex((todo) => todo.id == id);
@@ -182,25 +210,25 @@ function handleClickRemoveButton({ target }) {
   render();
 }
 
-todosWrapperElement.addEventListener("click", handleClickRemoveButton);
+todosWrapperElement.addEventListener('click', handleClickRemoveButton);
 
 // Счетчик карточек
 
 function todoCounters() {
-  const counterTodoElement = $("#todo-counter");
-  const counterInProgressElement = $("#in-progress-counter");
-  const counterDoneElement = $("#done-counter");
+  const counterTodoElement = $('#todo-counter');
+  const counterInProgressElement = $('#in-progress-counter');
+  const counterDoneElement = $('#done-counter');
 
   let todoCounter = 0;
   let inProgressCounter = 0;
   let doneCounter = 0;
 
   data.forEach((todo) => {
-    if (todo.status == "todo") {
+    if (todo.status == 'todo') {
       todoCounter += 1;
-    } else if (todo.status == "in-progress") {
+    } else if (todo.status == 'in-progress') {
       inProgressCounter += 1;
-    } else if (todo.status == "done") {
+    } else if (todo.status == 'done') {
       doneCounter += 1;
     }
   });
@@ -213,38 +241,38 @@ function todoCounters() {
 // Очиста от карточек в каждой колонке
 
 function resetColumns() {
-  const todoContainerElement = $("#todo");
-  const inProgressContainerElement = $("#in-progress");
-  const doneContainerElement = $("#done");
+  const todoContainerElement = $('#todo');
+  const inProgressContainerElement = $('#in-progress');
+  const doneContainerElement = $('#done');
 
-  todoContainerElement.innerHTML = "";
-  inProgressContainerElement.innerHTML = "";
-  doneContainerElement.innerHTML = "";
+  todoContainerElement.innerHTML = '';
+  inProgressContainerElement.innerHTML = '';
+  doneContainerElement.innerHTML = '';
 }
 
 // Перемещение карточки в зависимоси от статуса
 
 function handleChangeElement({ target }) {
   const { role } = target.dataset;
-  if (role !== "status") return;
+  if (role !== 'status') return;
 
-  const rootElement = target.closest(".todo__card");
+  const rootElement = target.closest('.todo__card');
   const { id } = rootElement.dataset;
 
   const currentCard = data.find((todo) => todo.id == id);
 
-  const selectElement = target.closest(".card__status");
+  const selectElement = target.closest('.card__status');
 
   let inProgress = 0;
 
   data.forEach((todo) => {
-    if (todo.status == "in-progress") {
+    if (todo.status == 'in-progress') {
       inProgress += 1;
     }
   });
 
-  if (inProgress >= 6 && selectElement.value == "in-progress") {
-    alert("Выполните оставшиеся задачи, чтобы добавить новую");
+  if (inProgress >= 6 && selectElement.value == 'in-progress') {
+    alert('Выполните оставшиеся задачи, чтобы добавить новую');
     render();
     return;
   }
@@ -258,9 +286,9 @@ function handleChangeElement({ target }) {
 function handleClickRemoveButton({ target }) {
   const { role } = target.dataset;
 
-  if (role !== "remove") return;
+  if (role !== 'remove') return;
 
-  const rootElement = target.closest(".todo__card");
+  const rootElement = target.closest('.todo__card');
   const { id } = rootElement.dataset;
 
   const index = data.findIndex((todo) => todo.id == id);
@@ -271,15 +299,15 @@ function handleClickRemoveButton({ target }) {
   render();
 }
 
-todosWrapperElement.addEventListener("change", handleChangeElement);
+todosWrapperElement.addEventListener('change', handleChangeElement);
 
 // Удаление всех карточек кнопкой delete all
 
 function handleDeleteAllButton() {
-  const deleteConfirm = confirm("Вы уверены, что хотите удалить?");
+  const deleteConfirm = confirm('Вы уверены, что хотите удалить?');
 
   if (deleteConfirm == true) {
-    const newArray = data.filter((todo) => todo.status !== "done");
+    const newArray = data.filter((todo) => todo.status !== 'done');
     data.length = 0;
     newArray.forEach((todo) => data.push(todo));
   }
@@ -288,17 +316,17 @@ function handleDeleteAllButton() {
   render();
 }
 
-deleteAllButtonElement.addEventListener("click", handleDeleteAllButton);
+deleteAllButtonElement.addEventListener('click', handleDeleteAllButton);
 
 // Подключение пользователей
 
-fetch("https://jsonplaceholder.typicode.com/users")
+fetch('https://jsonplaceholder.typicode.com/users')
   .then((response) => response.json())
   .then((users) => {
     renderUserName(users);
   })
   .catch(() => {
-    console.log("Что-то пошло не так");
+    console.log('Что-то пошло не так');
   });
 
 function buildTemplateUsersName({ name }) {
@@ -308,14 +336,61 @@ function buildTemplateUsersName({ name }) {
 }
 
 function renderUserName(users) {
-  let html = "";
+  let html = '';
 
   users.forEach((user) => {
     const template = buildTemplateUsersName(user);
     html += template;
   });
 
-  const selectUsersNameElement = $(".create-users__select");
+  const selectUsersNameElement = $('.create-users__select');
+  const selectEditUsersNameElement = $('.edit-users__select');
 
-  selectUsersNameElement.insertAdjacentHTML("beforeend", html);
+  selectUsersNameElement.insertAdjacentHTML('beforeend', html);
+  selectEditUsersNameElement.insertAdjacentHTML('beforeend', html);
 }
+
+// Кнопка Edit
+
+function handleClickEditButton({ target }) {
+  const { role } = target.dataset;
+
+  if (role !== 'edit') return;
+
+  editTodoModalElement.show();
+
+  const rootElement = target.closest('.todo__card');
+  const { id } = rootElement.dataset;
+
+  const todoCard = data.find((todo) => todo.id == id);
+
+  editFormElement.setAttribute('data-id', `${id}`);
+
+  editModalTitleInputElement.value = todoCard.title;
+  editModalDescriptionElement.value = todoCard.description;
+  editModalUserNameElement.value = todoCard.userName;
+
+  setDataToStorage();
+  render();
+}
+
+todosWrapperElement.addEventListener('click', handleClickEditButton);
+
+function handleSubmitEditForm(event) {
+  event.preventDefault();
+
+  const dataId = editFormElement.getAttribute('data-id');
+  console.log(dataId);
+
+  const currentTodoCard = data.find((todo) => todo.id == dataId);
+  console.log(currentTodoCard);
+
+  currentTodoCard.title = editModalTitleInputElement.value;
+  currentTodoCard.description = editModalDescriptionElement.value;
+  currentTodoCard.userName = editModalUserNameElement.value;
+
+  setDataToStorage();
+  render();
+}
+
+editFormElement.addEventListener('submit', handleSubmitEditForm);

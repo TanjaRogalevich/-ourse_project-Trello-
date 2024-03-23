@@ -94,8 +94,7 @@
               <select
                 class="form-select form-select-sm create-users__select w-50"
                 aria-label="Small select example"
-              >
-              </select>
+              ></select>
               <button
                 type="submit"
                 class="btn btn-primary create-todo__button w-25"
@@ -109,6 +108,7 @@
       </div>
     </div>
 
+    <!-- Модальное окно для редактирования -->
     <div
       class="modal fade"
       id="edit-todo__modal"
@@ -119,7 +119,7 @@
       aria-hidden="true"
     >
       <div class="modal-dialog">
-        <form class="create-form">
+        <form class="edit-form" data-id="">
           <div class="modal-content">
             <div class="modal-header">
               <input
@@ -149,8 +149,9 @@
                 aria-label="Small select example"
               ></select>
               <button
-                type="button"
-                class="btn btn-primary eddit-todo__button w-25"
+                type="submit"
+                data-bs-dismiss="modal"
+                class="btn btn-primary edit-todo__button w-25"
               >
                 Confirm
               </button>
