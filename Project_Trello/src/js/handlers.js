@@ -35,14 +35,12 @@ function handleSubmitForm(event) {
 
 function handleClickRemoveButton({ target }) {
   const { role } = target.dataset;
-
   if (role !== 'remove') return;
 
   const rootElement = target.closest('.todo__card');
   const { id } = rootElement.dataset;
 
   const index = data.findIndex((todo) => todo.id == id);
-
   data.splice(index, 1);
 
   setDataToStorage(data);
@@ -59,11 +57,11 @@ function handleChangeElement({ target }) {
   const { id } = rootElement.dataset;
 
   const currentCard = data.find((todo) => todo.id == id);
-
   const selectElement = target.closest('.card__status');
 
+  // Проверка alert
+  
   let inProgress = 0;
-
   data.forEach((todo) => {
     if (todo.status == 'in-progress') {
       inProgress += 1;
@@ -100,16 +98,14 @@ function handleDeleteAllButton() {
 
 function handleClickEditButton({ target }) {
   const { role } = target.dataset;
-
   if (role !== 'edit') return;
-
+  
   editTodoModalElement.show();
 
   const rootElement = target.closest('.todo__card');
   const { id } = rootElement.dataset;
 
   const todoCard = data.find((todo) => todo.id == id);
-
   editFormElement.setAttribute('data-id', `${id}`);
 
   editModalTitleInputElement.value = todoCard.title;
@@ -124,7 +120,6 @@ function handleSubmitEditForm(event) {
   event.preventDefault();
 
   const dataId = editFormElement.getAttribute('data-id');
-
   const currentTodoCard = data.find((todo) => todo.id == dataId);
 
   currentTodoCard.title = editModalTitleInputElement.value;

@@ -1,3 +1,5 @@
+import { Modal, Dropdown } from 'bootstrap';
+
 import {
   handleSubmitForm,
   handleClickRemoveButton,
@@ -23,6 +25,7 @@ if (data.length) {
 }
 
 // const
+
 const createTodoModalElement = new Modal('#create-todo__modal', {
   keyboard: false,
 });
@@ -32,7 +35,6 @@ const editTodoModalElement = new Modal('#edit-todo__modal', {
 });
 
 const openModalElement = $('.add-card-btn');
-const editTodoButtonElement = $('.edit-btn');
 const addTodoButtonElement = $('.create-todo__button');
 
 const createModalTitleInputElement = $('#new-title-input');
@@ -44,14 +46,12 @@ const editModalDescriptionElement = $('#edit-description-input');
 const editModalUserNameElement = $('.edit-users__select');
 
 const todosWrapperElement = $('.todos__wrapper');
-
 const deleteAllButtonElement = $('.clear-all-btn');
-
 const editModalConfirmButtonElement = $('.edit-todo__button');
-
 const editFormElement = $('.edit-form');
 
 // Вызов модального окна кнопкой add
+
 openModalElement.addEventListener('click', () => {
   createTodoModalElement.show();
 });
